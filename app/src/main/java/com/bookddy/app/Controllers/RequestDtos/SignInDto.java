@@ -1,4 +1,4 @@
-package com.bookddy.app.Controllers.RequestDtos;
+package com.bookddy.app.controllers.RequestDtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

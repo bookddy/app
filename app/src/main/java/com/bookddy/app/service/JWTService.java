@@ -1,10 +1,10 @@
-package com.bookddy.app.services;
+package com.bookddy.app.service;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 public class JWTService {
+
+
 
 }

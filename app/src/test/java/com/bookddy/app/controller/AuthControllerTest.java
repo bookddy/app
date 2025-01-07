@@ -2,7 +2,7 @@ package com.bookddy.app.controller;
 
 import com.bookddy.app.controllers.RequestDtos.SignInDto;
 import com.bookddy.app.controllers.ResponseDtos.TokenDto;
-import com.bookddy.app.services.JWTService;
+import com.bookddy.app.service.JWTService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;

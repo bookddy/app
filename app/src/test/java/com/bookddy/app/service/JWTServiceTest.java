@@ -1,4 +1,4 @@
-package com.bookddy.app.services;
+package com.bookddy.app.service;
 
 public class JWTServiceTest {
 

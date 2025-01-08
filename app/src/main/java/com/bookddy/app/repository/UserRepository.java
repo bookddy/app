@@ -1,9 +1,11 @@
 package com.bookddy.app.repository;
 
 import com.bookddy.app.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Repository;
 
-public class UserRepository {
-    public User findByUsername(String username) {
-
-    }
+@Repository
+public interface UserRepository extends JpaRepository<User, String> {
+    User findByUsername(String username);
 }

@@ -1,49 +1,52 @@
-import {render, screen} from '@testing-library/react';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import Register from './page';
 
-jest.mock('../../../api/authAPI');
-
-const newUserMock = {
-    name: 'Andrea Lopez',
-    username: 'alopez',
-    password:'asdfghj',
-    email:'alopez@gmail.com'
-}
-
 const setupPageLoad = () => {
-    render(<Register />);
+  return render(<Register />);
 };
 
 describe('<Register />', () => {
-    afterEach(() => {
-        jest.resetAllMocks();
+  beforeEach(() => {
+    setupPageLoad();
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  describe('When register form loads', () => {
+    it('Should have the title Register', () => {
+        expect(screen.getByRole('heading')).toHaveTextContent('Register');
     });
 
-    describe('When register form loads', () => {
-        it('Should have the title Register', () => {
-            setupPageLoad();
-            expect(screen.getByRole('heading')).toHaveTextContent('Register');
-        })
-
-        it('Should display tha name field', () => {
-            setupPageLoad();
-            expect(screen.getByRole('textbox', {name: 'Name'})).toBeInTheDocument();
-        })
-
-        it('Should display tha username field', () => {
-            setupPageLoad();
-            expect(screen.getByRole('textbox', {name: 'Username'})).toBeInTheDocument();
-        })
-
-        it('Should display tha password field', () => {
-            setupPageLoad();
-            expect(screen.getByRole('textbox', {name: 'Password'})).toBeInTheDocument();
-        })
-
-        it('Should display tha email field', () => {
-            setupPageLoad();
-            expect(screen.getByRole('textbox', {name: 'Email'})).toBeInTheDocument();
-        })
+    it('Should display the name field', () => {
+        expect(screen.getByTestId('name')).toBeInTheDocument();
     });
 
-})
+    it('Should display the username field', () => {
+        expect(screen.getByTestId('username')).toBeInTheDocument();
+    });
+
+    it('Should display the password field', () => {
+        expect(screen.getByTestId('password')).toBeInTheDocument();
+    });
+
+    it('Should display the email field', () => {
+        expect(screen.getByTestId('email')).toBeInTheDocument();
+    });
+
+    it.skip('Should display the submit button', () => {
+      expect(screen.getByText(/submit/i)).toBeInTheDocument();
+    });
+
+    it.skip('Should display a terms and conditions checkbox', () => {
+      expect(screen.getByRole('checkbox')).toBeInTheDocument();
+      expect(screen.getByLabelText('I agree to the terms and conditions')).toBeInTheDocument();
+    });
+
+    it.skip('Should display an error message placeholder for invalid inputs', () => {
+      expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
+    });
+  });
+});

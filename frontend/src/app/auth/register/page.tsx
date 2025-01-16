@@ -19,35 +19,36 @@ export default function Register() {
       <div>
           <TextField
             required
-            id="name"
-            data-testid="name"
-            label="name"
-            defaultValue="name"
+            id="Name"
+            // data-testid="name"
+            label="Name"
+            defaultValue="Name"
           />
         <FormControl defaultValue="" required>
           <TextField
             required
-            id="username"
-            data-testid="username"
-            label="username"
-            defaultValue="username"
+            id="Username"
+            // data-testid="username"
+            label="Username"
+            defaultValue="Username"
           />
         </FormControl>
         <FormControl defaultValue="" required>
           <TextField
             required
-            id="email"
-            data-testid="email"
-            label="email"
-            defaultValue="email"
+            id="Email"
+            // data-testid="email"
+            label="Email"
+            type="email"
+            defaultValue="Email"
           />
         </FormControl>
 
         <FormControl defaultValue="" required>
           <TextField
-            id="password"
-            data-testid="password"
-            label="password"
+            id="Password"
+            // data-testid="password"
+            label="Password"
             type="password"
             autoComplete="current-password"
           />

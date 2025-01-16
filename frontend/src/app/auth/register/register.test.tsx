@@ -21,19 +21,19 @@ describe('<Register />', () => {
     });
 
     it('Should display the name field', () => {
-        expect(screen.getByTestId('name')).toBeInTheDocument();
+        expect(screen.getByRole('textbox', { name: 'Name' })).toBeInTheDocument();
     });
 
     it('Should display the username field', () => {
-        expect(screen.getByTestId('username')).toBeInTheDocument();
+        expect(screen.getByRole('textbox', { name: 'Username' })).toBeInTheDocument();
     });
 
     it('Should display the password field', () => {
-        expect(screen.getByTestId('password')).toBeInTheDocument();
+        expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
     });
 
     it('Should display the email field', () => {
-        expect(screen.getByTestId('email')).toBeInTheDocument();
+        expect(screen.getByRole('textbox', { name: 'Email' })).toBeInTheDocument();
     });
 
     it.skip('Should display the submit button', () => {

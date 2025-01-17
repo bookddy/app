@@ -1,17 +1,25 @@
-import { AppBar, Box, Toolbar, IconButton, Typography, Button } from "@mui/material";
-import Grid from "@mui/material/Grid2"
+import Grid from "@mui/material/Grid2";
+import Image from "next/image";
  
 export default function Layout({ children }: { children: React.ReactNode }) {
-    const authImagePath = process.env.BASE_URL + '/img/authImage.png';
-    const bookddyLogoPath = process.env.BASE_URL + '/img/bookddyLogoName.png';
+    const authImagePath = '/img/authImage.svg';
+    const bookddyLogoPath = '/img/bookddyLogoName.svg';
   return (
     <Grid container spacing={0} className="h-screen bg-[#FCF8EE]">
       <Grid size={6} className="bg-[#09535E] justify-items-center content-center rounded-r-[44px]"> 
-        <img src={authImagePath} alt="Hands holding a book"/>
+        <Image 
+            src={authImagePath}
+            alt="Hands holding a book"
+            width={650}
+            height={650}/>
       </Grid>
       <Grid size={6} container className="justify-items-center content-center">
         <Grid size={12} className="mb-4 justify-items-center">
-            <img src={bookddyLogoPath} alt="Bookddy Logo"/>
+            <Image 
+            src={bookddyLogoPath}
+            alt="Hands holding a book"
+            width={200}
+            height={200}/>
         </Grid>
         <Grid size={12} className="justify-items-center">
         {children}

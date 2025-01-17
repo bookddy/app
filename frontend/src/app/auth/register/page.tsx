@@ -9,6 +9,9 @@ import Button from "@mui/material/Button";
 
 export default function Register() {
   const [name, setName] = React.useState("");
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [email, setEmail] = React.useState("");
 
   return (
     <Box
@@ -34,6 +37,10 @@ export default function Register() {
           required
           id="Username"
           label="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          error={username === ""}
+          helperText={username === "" ? "*Username is required" : ""}
         />
         </div>
         <div className="form-row">
@@ -42,6 +49,10 @@ export default function Register() {
           id="Email"
           label="Email"
           type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          error={email === ""}
+          helperText={email === "" ? "*Email is required" : ""}
         />
         </div>
         <div className="form-row">
@@ -51,6 +62,10 @@ export default function Register() {
           label="Password"
           type="password"
           autoComplete="current-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          error={password === ""}
+          helperText={password === "" ? "*Password is required" : ""}
         />
       </div>
 
@@ -62,7 +77,7 @@ export default function Register() {
           />
         </FormGroup>
 
-        <Button variant="outlined">Submit</Button>
+        <Button variant="outlined">Register</Button>
       </div>
     </Box>
   );

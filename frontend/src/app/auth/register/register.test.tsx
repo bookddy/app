@@ -2,6 +2,10 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import Register from "./page";
 import userEvent from "@testing-library/user-event";
+import User from "@/utils/declarations";
+import UserAPI from "@/api/userAPI";
+
+jest.mock('../../../api/userAPI');
 
 const setupPageLoad = () => {
   return render(<Register />);
@@ -23,7 +27,7 @@ describe("<Register />", () => {
     email: "john.doe@gmail.com",
   };
 
-  const fillAndSubmitForm = async (mockForm, submit = true) => {
+  const fillAndSubmitForm = async (mockForm : User, submit = true) => {
     const nameField = screen.getByRole("textbox", {name: /Name/});
     const usernameField = screen.getByRole("textbox", {name: /Username/i});
     const passwordField = screen.getByLabelText(/password/i);
@@ -92,9 +96,21 @@ describe("<Register />", () => {
     });
   });
 
-  // describe("When creating an user",()=>{
-  //   describe('With a valid user', () => {
-  //
-  //   });
-  // });
+  describe("When creating an user",()=>{
+    describe('With a valid user', () => {
+      const setupValidUser = async () => {
+        (UserAPI.create as jest.Mock).mockResolvedValue({
+          headers: {
+            location: 'user/userId',
+          },
+        });
+        render(<Register/>);
+        await fillAndSubmitForm(mockForm);
+      }
+      it.skip('should call create user once', async () => {
+        await setupValidUser();
+        expect(UserAPI.create).toHaveBeenCalledTimes(1);
+      })
+    });
+  });
 });

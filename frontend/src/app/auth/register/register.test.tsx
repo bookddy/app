@@ -82,8 +82,7 @@ describe("<Register />", () => {
   });
 
   describe("When form has invalid fields", () => {
-    it.skip("Should display an error message when empty name field", () => {
-      setupPageLoad();
+    it("Should display an error message when empty name field", () => {
       fillAndSubmitForm({ ...mockForm, name: "" }, false);
       expect(screen.getByText("*Name is required")).toBeInTheDocument();
     });

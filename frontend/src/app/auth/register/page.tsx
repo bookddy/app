@@ -18,7 +18,7 @@ export default function Register() {
       autoComplete="off"
     >
       <h1>Register</h1>
-      <div>
+        <div className="form-row">
         <TextField
           required
           value={name}
@@ -26,24 +26,27 @@ export default function Register() {
           error={name === ""}
           id="Name"
           label="Name"
-          defaultValue="Name"
           helperText={name === "" ? "*Name is required" : ""}
         />
+        </div>
+        <div className="form-row">
         <TextField
           required
           id="Username"
           label="Username"
-          defaultValue="Username"
         />
+        </div>
+        <div className="form-row">
         <TextField
           required
           id="Email"
           label="Email"
           type="email"
-          defaultValue="Email"
         />
-
+        </div>
+        <div className="form-row">
         <TextField
+          required
           id="Password"
           label="Password"
           type="password"

@@ -1,9 +1,9 @@
 import User from '@/utils/declarations';
 import axios from 'axios';
+import apiURL from './apiConfig';
 
-// const API_URL = process.env.API_URL;
 const UserAPI = {
-    create: async (user : User) => await axios.post(`/user`, user)
+    create: async (user : User) => await axios.post(`${apiURL}/user`, user)
 }
 
 export default UserAPI;

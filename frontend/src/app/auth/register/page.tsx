@@ -2,9 +2,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import UserAPI from "@/api/userAPI";
 
@@ -14,8 +11,9 @@ export default function Register() {
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    console.log('Form submission prevented!');
     const user = { name, username, password, email };
 
     // to do: check preventDefault
@@ -23,7 +21,7 @@ export default function Register() {
     //   return;
     // }
 
-    await UserAPI.create(user)
+    UserAPI.create(user)
       .then((response) => {
         console.log(response.headers["location"]);
       })
@@ -38,7 +36,6 @@ export default function Register() {
       component="form"
       onSubmit={handleSubmit}
       sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
-      noValidate
       autoComplete="off"
     >
       <h1>Register</h1>

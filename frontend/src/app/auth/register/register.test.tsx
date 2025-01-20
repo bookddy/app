@@ -1,5 +1,3 @@
-import axios from "axios";
-import AxiosMockAdapter from "axios-mock-adapter";
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import Register from "./page";
@@ -7,17 +5,20 @@ import userEvent from "@testing-library/user-event";
 import User from "@/utils/declarations";
 import UserAPI from "@/api/userAPI";
 
-jest.spyOn(UserAPI, "create");
+jest.mock('../../../api/userAPI');
 
-const mock = new AxiosMockAdapter(axios);
-
-mock
-  .onPost("/user")
-  .reply(
-    200,
-    { users: { id: 1, name: "John Smith" } },
-    { location: "user/userId" }
-  );
+const mockForm = {
+  name: "John Doe",
+  username: "johndoe",
+  password: "password",
+  email: "john.doe@gmail.com",
+};
+const emptyMockForm = {
+  name: "",
+  username: "",
+  password: "",
+  email: "",
+};
 
 const setupPageLoad = () => {
   return render(<Register />);
@@ -31,13 +32,6 @@ describe("<Register />", () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
-
-  const mockForm = {
-    name: "John Doe",
-    username: "johndoe",
-    password: "password",
-    email: "john.doe@gmail.com",
-  };
 
   const fillAndSubmitForm = async (mockForm: User, submit = true) => {
     const nameField = screen.getByRole("textbox", { name: /Name/ });
@@ -105,23 +99,31 @@ describe("<Register />", () => {
       await fillAndSubmitForm({ ...mockForm, email: "" }, false);
       expect(screen.getByText("*Email is required")).toBeInTheDocument();
     });
+
+    it("should not call create user api", async () => {
+      await fillAndSubmitForm({ ...emptyMockForm}, true);
+      expect(UserAPI.create).toHaveBeenCalledTimes(0);
+    });
   });
 
   describe("When creating an user", () => {
     describe("With a valid user", () => {
+      
       const setupValidUser = async () => {
+        (UserAPI.create as jest.Mock).mockResolvedValue({
+          headers: {
+            location: 'user/userId',
+          },
+        });
+
         await fillAndSubmitForm(mockForm);
       };
 
-      it("should mock http call", async () => {
-        const user = await UserAPI.create(mockForm);
-        console.log(user);
-      });
-
       it("should call create user once", async () => {
         await setupValidUser();
-        expect(UserAPI.create).toHaveBeenCalledTimes(0);
+        expect(UserAPI.create).toHaveBeenCalledTimes(1);
       });
     });
   });
+
 });

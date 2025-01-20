@@ -6,6 +6,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
+import UserAPI from "@/api/userAPI";
 
 export default function Register() {
   const [name, setName] = React.useState("");
@@ -13,15 +14,35 @@ export default function Register() {
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
 
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const user = { name, username, password, email };
+
+    // to do: check preventDefault
+    // if (!name || !username || !password || !email) {
+    //   return;
+    // }
+
+    await UserAPI.create(user)
+      .then((response) => {
+        console.log(response.headers["location"]);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    // to do: reset the form after submission
+  }
   return (
     <Box
       component="form"
+      onSubmit={handleSubmit}
       sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
       noValidate
       autoComplete="off"
     >
       <h1>Register</h1>
-        <div className="form-row">
+      <div className="form-row">
         <TextField
           required
           value={name}
@@ -31,8 +52,8 @@ export default function Register() {
           label="Name"
           helperText={name === "" ? "*Name is required" : ""}
         />
-        </div>
-        <div className="form-row">
+      </div>
+      <div className="form-row">
         <TextField
           required
           id="Username"
@@ -42,8 +63,8 @@ export default function Register() {
           error={username === ""}
           helperText={username === "" ? "*Username is required" : ""}
         />
-        </div>
-        <div className="form-row">
+      </div>
+      <div className="form-row">
         <TextField
           required
           id="Email"
@@ -54,8 +75,8 @@ export default function Register() {
           error={email === ""}
           helperText={email === "" ? "*Email is required" : ""}
         />
-        </div>
-        <div className="form-row">
+      </div>
+      <div className="form-row">
         <TextField
           required
           id="Password"
@@ -70,14 +91,9 @@ export default function Register() {
       </div>
 
       <div>
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox defaultChecked />}
-            label="Label"
-          />
-        </FormGroup>
-
-        <Button variant="outlined">Register</Button>
+        <Button type="submit" variant="outlined">
+          Register
+        </Button>
       </div>
     </Box>
   );

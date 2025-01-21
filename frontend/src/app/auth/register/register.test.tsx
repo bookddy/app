@@ -124,6 +124,11 @@ describe("<Register />", () => {
         await setupValidUser();
         expect(UserAPI.create).toHaveBeenCalledTimes(1);
       });
+
+      it.skip("should disable the register button", async () => {
+        await setupValidUser();
+        expect(screen.getByRole('button', { name: "Register" })).toBeDisabled();
+      });
     });
 
     describe("When API returns error", () => {

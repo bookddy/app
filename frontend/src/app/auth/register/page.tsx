@@ -12,8 +12,10 @@ export default function Register() {
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [openAlert, setOpenAlert] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    setLoading(true);
     event.preventDefault();
     const user = { name, username, password, email };
 
@@ -24,8 +26,10 @@ export default function Register() {
       .catch((error) => {
         console.error(error);
         setOpenAlert(true);
+      })
+      .finally(() =>{
+        setLoading(false);
       });
-
   }
   return (
     <Box
@@ -87,7 +91,7 @@ export default function Register() {
       </div>
 
       <div className="flex justify-center items-center w-full p-2">
-        <Button type="submit" variant="contained" style={{backgroundColor: "#09535E"}}>
+        <Button type="submit" loading={loading} variant="contained" style={{backgroundColor: "#09535E"}}>
           Register
         </Button>
       </div>

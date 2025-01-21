@@ -4,22 +4,18 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import UserAPI from "@/api/userAPI";
+import { Alert, Typography } from "@mui/material";
 
 export default function Register() {
   const [name, setName] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [openAlert, setOpenAlert] = React.useState(false);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log('Form submission prevented!');
     const user = { name, username, password, email };
-
-    // to do: check preventDefault
-    // if (!name || !username || !password || !email) {
-    //   return;
-    // }
 
     UserAPI.create(user)
       .then((response) => {
@@ -27,18 +23,22 @@ export default function Register() {
       })
       .catch((error) => {
         console.error(error);
+        setOpenAlert(true);
       });
 
-    // to do: reset the form after submission
   }
   return (
     <Box
       component="form"
       onSubmit={handleSubmit}
       sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
+      className="bg-[#E9E7DA] p-6 rounded-lg"
       autoComplete="off"
     >
-      <h1>Register</h1>
+      <Typography variant="h4" align="center" padding={1}>
+        Register
+      </Typography>
+      { openAlert ? <Alert severity="error" variant="filled" sx={{ mb: 2, mr: 1, ml: 1}}>Unable to Register</Alert> : <></>}
       <div className="form-row">
         <TextField
           required
@@ -79,7 +79,6 @@ export default function Register() {
           id="Password"
           label="Password"
           type="password"
-          autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           error={password === ""}
@@ -87,8 +86,8 @@ export default function Register() {
         />
       </div>
 
-      <div>
-        <Button type="submit" variant="outlined">
+      <div className="flex justify-center items-center w-full p-2">
+        <Button type="submit" variant="contained" style={{backgroundColor: "#09535E"}}>
           Register
         </Button>
       </div>

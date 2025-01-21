@@ -107,6 +107,7 @@ describe("<Register />", () => {
   });
 
   describe("When creating an user", () => {
+
     describe("With a valid user", () => {
       
       const setupValidUser = async () => {
@@ -124,6 +125,26 @@ describe("<Register />", () => {
         expect(UserAPI.create).toHaveBeenCalledTimes(1);
       });
     });
+
+    describe("When API returns error", () => {
+      
+      const setupApiError = async () => {
+        jest.spyOn(console, 'error').mockImplementation(() => {});
+        (UserAPI.create as jest.Mock).mockRejectedValue(new Error('Error'));
+        await fillAndSubmitForm(mockForm);
+      };
+
+      it("should call create user once", async () => {
+        await setupApiError();
+        expect(UserAPI.create).toHaveBeenCalledTimes(1);
+      });
+
+      it("should display error message", async () => {
+        await setupApiError();
+        expect(screen.getByText("Unable to Register")).toBeInTheDocument();
+      });
+    });
+
   });
 
 });

@@ -27,7 +27,7 @@ export default function Register() {
         console.error(error);
         setOpenAlert(true);
       })
-      .finally(() =>{
+      .finally(() => {
         setLoading(false);
       });
   }
@@ -42,7 +42,13 @@ export default function Register() {
       <Typography variant="h4" align="center" padding={1}>
         Register
       </Typography>
-      { openAlert ? <Alert severity="error" variant="filled" sx={{ mb: 2, mr: 1, ml: 1}}>Unable to Register</Alert> : <></>}
+      {openAlert ? (
+        <Alert severity="error" variant="filled" sx={{ mb: 2, mr: 1, ml: 1 }}>
+          Unable to Register
+        </Alert>
+      ) : (
+        <></>
+      )}
       <div className="form-row">
         <TextField
           required
@@ -91,7 +97,13 @@ export default function Register() {
       </div>
 
       <div className="flex justify-center items-center w-full p-2">
-        <Button type="submit" loading={loading} variant="contained" style={{backgroundColor: "#09535E"}}>
+        <Button
+          type="submit"
+          disabled={loading}
+          loading={loading}
+          variant="contained"
+          style={{ backgroundColor: "#09535E" }}
+        >
           Register
         </Button>
       </div>

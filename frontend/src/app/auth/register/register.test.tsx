@@ -1,11 +1,11 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import Register from "./page";
 import userEvent from "@testing-library/user-event";
 import User from "@/utils/declarations";
 import UserAPI from "@/api/userAPI";
 
-jest.mock('../../../api/userAPI');
+jest.mock("../../../api/userAPI");
 
 const mockForm = {
   name: "John Doe",
@@ -45,6 +45,7 @@ describe("<Register />", () => {
     await userEvent.type(emailField, mockForm.email || "{tab}");
 
     if (submit) {
+      console.log("Submitting.....");
       const submitButton = screen.getByRole("button", { name: "Register" });
       await userEvent.click(submitButton);
     }
@@ -61,7 +62,7 @@ describe("<Register />", () => {
 
     it("Should display the username field", () => {
       expect(
-        screen.getByRole("textbox", { name: "Username" })
+        screen.getByRole("textbox", { name: "Username" }),
       ).toBeInTheDocument();
     });
 
@@ -71,13 +72,13 @@ describe("<Register />", () => {
 
     it("Should display the email field", () => {
       expect(
-        screen.getByRole("textbox", { name: "Email" })
+        screen.getByRole("textbox", { name: "Email" }),
       ).toBeInTheDocument();
     });
 
     it("Should display the register button", () => {
       expect(
-        screen.getByRole("button", { name: "Register" })
+        screen.getByRole("button", { name: "Register" }),
       ).toBeInTheDocument();
     });
   });
@@ -101,19 +102,17 @@ describe("<Register />", () => {
     });
 
     it("should not call create user api", async () => {
-      await fillAndSubmitForm({ ...emptyMockForm}, true);
+      await fillAndSubmitForm({ ...emptyMockForm }, true);
       expect(UserAPI.create).toHaveBeenCalledTimes(0);
     });
   });
 
   describe("When creating an user", () => {
-
     describe("With a valid user", () => {
-      
       const setupValidUser = async () => {
         (UserAPI.create as jest.Mock).mockResolvedValue({
           headers: {
-            location: 'user/userId',
+            location: "user/userId",
           },
         });
 
@@ -125,17 +124,22 @@ describe("<Register />", () => {
         expect(UserAPI.create).toHaveBeenCalledTimes(1);
       });
 
-      it.skip("should disable the register button", async () => {
-        await setupValidUser();
-        expect(screen.getByRole('button', { name: "Register" })).toBeDisabled();
+      it("should disable the register button", async () => {
+        console.log("disable register button");
+        const button = screen.getByRole("button", { name: "Register" });
+        expect(button).toBeEnabled();
+        const setupPromise = setupValidUser();
+        await waitFor(() => {
+          expect(button).toBeDisabled();
+        });
+        await setupPromise;
       });
     });
 
     describe("When API returns error", () => {
-      
       const setupApiError = async () => {
-        jest.spyOn(console, 'error').mockImplementation(() => {});
-        (UserAPI.create as jest.Mock).mockRejectedValue(new Error('Error'));
+        jest.spyOn(console, "error").mockImplementation(() => {});
+        (UserAPI.create as jest.Mock).mockRejectedValue(new Error("Error"));
         await fillAndSubmitForm(mockForm);
       };
 
@@ -149,7 +153,5 @@ describe("<Register />", () => {
         expect(screen.getByText("Unable to Register")).toBeInTheDocument();
       });
     });
-
   });
-
 });

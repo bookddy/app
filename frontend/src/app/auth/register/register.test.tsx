@@ -45,7 +45,6 @@ describe("<Register />", () => {
     await userEvent.type(emailField, mockForm.email || "{tab}");
 
     if (submit) {
-      console.log("Submitting.....");
       const submitButton = screen.getByRole("button", { name: "Register" });
       await userEvent.click(submitButton);
     }
@@ -83,7 +82,39 @@ describe("<Register />", () => {
     });
   });
 
-  describe("When form has invalid fields", () => {
+  describe("When filling the form with invalid fields", () => {
+    describe("With an invalid email", () => {
+      it("Should display an error message when invalid email is typed", async () => {
+        await fillAndSubmitForm({ ...mockForm, email: "asdasd.com" }, false);
+        expect(screen.getByText("*Invalid email")).toBeInTheDocument();
+      });
+    });
+    describe("With an invalid password", () => {
+      it("Should display an error message when short password is typed", async () => {
+        await fillAndSubmitForm({ ...mockForm, password: "short" }, false);
+        expect(screen.getByText("*At least 8 characters")).toBeInTheDocument();
+      });
+      it("Should display an error message when no number character is present in the password that is typed", async () => {
+        await fillAndSubmitForm({ ...mockForm, password: "weakPass" }, false);
+        expect(screen.getByText("*At least 1 number")).toBeInTheDocument();
+      });
+      it("Should display an error message when no uppercase letter is present in the password that is typed", async () => {
+        await fillAndSubmitForm({ ...mockForm, password: "weak" }, false);
+        expect(
+          screen.getByText("*At least 1 letter should be uppercase"),
+        ).toBeInTheDocument();
+      });
+
+      it("Should display an error message when no special character is present in the password that is typed", async () => {
+        await fillAndSubmitForm({ ...mockForm, password: "weakPass1" }, false);
+        expect(
+          screen.getByText("*At least 1 special character"),
+        ).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe("When form has empty fields", () => {
     it("Should display an error message when empty name field", async () => {
       await fillAndSubmitForm({ ...mockForm, name: "" }, false);
       expect(screen.getByText("*Name is required")).toBeInTheDocument();

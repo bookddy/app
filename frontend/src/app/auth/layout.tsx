@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Grid size={12} className="mb-4 justify-items-center">
             <Image 
             src={bookddyLogoPath}
-            alt="Hands holding a book"
+            alt="Bookdy logo"
             width={200}
             height={200}/>
         </Grid>

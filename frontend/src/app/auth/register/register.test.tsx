@@ -75,6 +75,24 @@ describe("<Register />", () => {
       ).toBeInTheDocument();
     });
 
+    it("Should display an error message when short password is typed", () => {
+      expect(screen.getByText("At least 8 characters")).toBeInTheDocument();
+    });
+    it("Should display an error message when no number character is present in the password that is typed", () => {
+      expect(screen.getByText("At least 1 number")).toBeInTheDocument();
+    });
+    it("Should display an error message when no uppercase letter is present in the password that is typed", () => {
+      expect(
+        screen.getByText("At least 1 letter should be uppercase"),
+      ).toBeInTheDocument();
+    });
+
+    it("Should display an error message when no special character is present in the password that is typed", () => {
+      expect(
+        screen.getByText("At least 1 special character"),
+      ).toBeInTheDocument();
+    });
+
     it("Should display the register button", () => {
       expect(
         screen.getByRole("button", { name: "Register" }),
@@ -118,28 +136,6 @@ describe("<Register />", () => {
     });
 
     describe("With an invalid password", () => {
-      it("Should display an error message when short password is typed", async () => {
-        await fillAndSubmitForm({ ...mockForm, password: "short" }, false);
-        expect(screen.getByText("At least 8 characters")).toBeInTheDocument();
-      });
-      it("Should display an error message when no number character is present in the password that is typed", async () => {
-        await fillAndSubmitForm({ ...mockForm, password: "weakPass" }, false);
-        expect(screen.getByText("At least 1 number")).toBeInTheDocument();
-      });
-      it("Should display an error message when no uppercase letter is present in the password that is typed", async () => {
-        await fillAndSubmitForm({ ...mockForm, password: "weak" }, false);
-        expect(
-          screen.getByText("At least 1 letter should be uppercase"),
-        ).toBeInTheDocument();
-      });
-
-      it("Should display an error message when no special character is present in the password that is typed", async () => {
-        await fillAndSubmitForm({ ...mockForm, password: "weakPass1" }, false);
-        expect(
-          screen.getByText("At least 1 special character"),
-        ).toBeInTheDocument();
-      });
-
       //TESTING CROSS ICONS as in prototype
       it("Should display a cross icon when short password is typed", async () => {
         await fillAndSubmitForm({ ...mockForm, password: "short" }, false);

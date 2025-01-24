@@ -10,7 +10,7 @@ jest.mock("../../../api/userAPI");
 const mockForm = {
   name: "John Doe",
   username: "johndoe",
-  password: "password",
+  password: "Password1#",
   email: "john.doe@gmail.com",
 };
 const emptyMockForm = {

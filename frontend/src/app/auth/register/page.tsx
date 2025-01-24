@@ -25,6 +25,10 @@ export default function Register() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     setLoading(true);
     event.preventDefault();
+    if (Object.values(validation).some(value => value == false)) {
+      setLoading(false);
+      return;
+    }
     const user = { name, username, password, email };
 
     UserAPI.create(user)
@@ -102,8 +106,8 @@ export default function Register() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          error={email === ""}
-          helperText={email === "" ? "*Email is required" : ""}
+          error={email === "" || !/^[^@]+@[^@]+\.[^@]+$/.test(email)}
+          helperText={email === "" ? "*Email is required" : ( /^[^@]+@[^@]+\.[^@]+$/.test(email) ? "": "*Invalid email")}
           fullWidth
         />
       </div>

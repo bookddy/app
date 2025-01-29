@@ -1,4 +1,4 @@
-package com.bookddy.app.controllers.ResponseDtos;
+package com.bookddy.app.controllers.responseDtos;
 
 import java.time.LocalDateTime;
 

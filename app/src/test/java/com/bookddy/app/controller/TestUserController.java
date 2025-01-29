@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.bookddy.app.configuration.TestSecurityConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest(UserController.class)
+//@WebMvcTest(UserController.class)
 @Import(TestSecurityConfig.class)
 @ActiveProfiles("test")
 public class TestUserController {
@@ -23,7 +23,7 @@ public class TestUserController {
     // private ObjectMapper mapper;
     
     @MockitoBean
-    private UserService userService;
+    //private UserService userService;
     
     @Mock
     private PasswordEncoder passwordEncoder;

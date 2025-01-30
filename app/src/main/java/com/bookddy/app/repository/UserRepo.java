@@ -1,6 +1,6 @@
-package com.bookddy.app.repositories;
+package com.bookddy.app.repository;
 import org.springframework.stereotype.Repository;
-import com.bookddy.app.models.User;
+import com.bookddy.app.model.User;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 

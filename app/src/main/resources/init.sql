@@ -22,7 +22,7 @@ END $$;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE users (
-    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     username TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE books (
 
 CREATE TABLE reviews (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user_id BIGINT REFERENCES users(id),
+    user_id UUID REFERENCES users(id),
     book_id BIGINT REFERENCES books(id),
     review_text TEXT,
     is_spoiler BOOLEAN DEFAULT false,
@@ -83,7 +83,7 @@ CREATE TABLE reviews (
 
 CREATE TABLE ratings (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user_id BIGINT REFERENCES users(id),
+    user_id uuid REFERENCES users(id),
     book_id BIGINT REFERENCES books(id),
     rating INTEGER,
     created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -108,7 +108,7 @@ CREATE TABLE books_genres (
 
 CREATE TABLE reading_status (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user_id BIGINT REFERENCES users(id),
+    user_id UUID REFERENCES users(id),
     book_id BIGINT REFERENCES books(id),
     status TEXT,
     start_date DATE,
@@ -121,7 +121,7 @@ CREATE TABLE reading_status (
 
 CREATE TABLE bookshelves (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user_id BIGINT REFERENCES users(id),
+    user_id uuid REFERENCES users(id),
     name TEXT NOT NULL,
     description TEXT,
     is_public BOOLEAN DEFAULT false,
@@ -141,14 +141,14 @@ CREATE TABLE communities (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name TEXT NOT NULL UNIQUE,
     description TEXT,
-    created_by BIGINT REFERENCES users(id),
+    created_by uuid REFERENCES users(id),
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     is_deleted BOOLEAN DEFAULT false
 );
 
 CREATE TABLE user_communities (
-    user_id BIGINT REFERENCES users(id),
+    user_id uuid REFERENCES users(id),
     community_id BIGINT REFERENCES communities(id),
     role TEXT DEFAULT 'member',
     joined_at TIMESTAMPTZ DEFAULT NOW(),
@@ -157,7 +157,7 @@ CREATE TABLE user_communities (
 );
 
 CREATE TABLE review_likes (
-    user_id BIGINT REFERENCES users(id),
+    user_id uuid REFERENCES users(id),
     review_id BIGINT REFERENCES reviews(id),
     created_at TIMESTAMPTZ DEFAULT NOW(),
     PRIMARY KEY (user_id, review_id)
@@ -165,7 +165,7 @@ CREATE TABLE review_likes (
 
 CREATE TABLE recommendations (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user_id BIGINT REFERENCES users(id),
+    user_id uuid REFERENCES users(id),
     book_id BIGINT REFERENCES books(id),
     recommended_to_user_id BIGINT REFERENCES users(id),
     note TEXT,

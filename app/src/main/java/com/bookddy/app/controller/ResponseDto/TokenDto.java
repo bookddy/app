@@ -1,5 +1,4 @@
-package com.bookddy.app.controllers.responseDtos;
-
+package com.bookddy.app.controller.ResponseDto;
 import java.time.LocalDateTime;
 
 public record TokenDto(

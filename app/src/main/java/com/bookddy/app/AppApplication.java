@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @OpenAPIDefinition
-@ComponentScan
 public class AppApplication {
 
 	public static void main(String[] args) {

@@ -1,9 +1,9 @@
-package com.bookddy.app.services;
+package com.bookddy.app.service;
 
 import java.util.UUID;
 import org.springframework.stereotype.Service;
-import com.bookddy.app.models.User;
-import com.bookddy.app.repositories.UserRepo;
+import com.bookddy.app.model.User;
+import com.bookddy.app.repository.UserRepo;
 
 @Service
 public class UserService {

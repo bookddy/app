@@ -27,7 +27,7 @@ public class UserController {
             registerBody.email(), 
             registerBody.password()
         );
-        UUID userId = user.getUuid();
+        UUID userId = user.getId();
         return ResponseEntity
             .created(URI.create("user/" + userId))
             .build();

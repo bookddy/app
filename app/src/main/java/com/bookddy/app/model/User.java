@@ -9,30 +9,36 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 public class User {
     @Id
-    private UUID uuid;
+    private UUID id;
     private String name;
     private String username;
     private String email;
     private String password;
+    private String profileImageUrl;
+    private String bio;
+    private String role;
 
-    public User(){
+    public User() {}
 
-    }
 
-    public User(UUID uuid, String name, String username, String email, String password) {
-        this.uuid = uuid;
+    public User(UUID id, String name, String username, String email, String password, String profileImageUrl, String bio, String role) {
+        this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
-    }
-    
-    public UUID getUuid() {
-        return uuid;
+        this.profileImageUrl = profileImageUrl;
+        this.bio = bio;
+        this.role = role;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -65,5 +71,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

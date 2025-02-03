@@ -22,20 +22,14 @@ END $$;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    username TEXT NOT NULL UNIQUE,
-    email TEXT NOT NULL UNIQUE,
-    password_hash TEXT NOT NULL,
-    name TEXT,
-    profile_image_url TEXT,
-    bio TEXT,
-    last_login TIMESTAMPTZ,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW(),
-    is_deleted BOOLEAN DEFAULT false,
-    role TEXT NOT NULL DEFAULT 'user',
-    CONSTRAINT valid_email CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
-    CONSTRAINT valid_username CHECK (username ~* '^[A-Za-z0-9_-]{3,30}$')
+   id UUID PRIMARY KEY,
+   name TEXT,
+   username TEXT NOT NULL UNIQUE,
+   email TEXT NOT NULL UNIQUE,
+   password TEXT NOT NULL,
+   profile_image_url TEXT,
+   bio TEXT,
+   role TEXT NOT NULL DEFAULT 'user'
 );
 
 CREATE TABLE authors (
@@ -167,7 +161,7 @@ CREATE TABLE recommendations (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id uuid REFERENCES users(id),
     book_id BIGINT REFERENCES books(id),
-    recommended_to_user_id BIGINT REFERENCES users(id),
+    recommended_to_user_id UUID REFERENCES users(id),
     note TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     is_read BOOLEAN DEFAULT false

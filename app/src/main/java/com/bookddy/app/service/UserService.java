@@ -17,12 +17,15 @@ public class UserService {
     public User createUser(String name, String username, String email, String password){
         UUID generatedId = UUID.randomUUID();
         User user = userRepo.save(new User(
-            generatedId,
-            name,
-            username, 
-            email,
-            password)
-        );
+                generatedId,
+                name,
+                username,
+                email,
+                password,
+                "jkljlk.com",
+                "akskajsla",
+                "user"
+        ));
         return user;
     }
 }

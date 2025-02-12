@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<FindBugsFilter>
+    <Match>
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"/>
+    </Match>
+    <Match>
+        <Bug pattern="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING"/>
+    </Match>
+    <Match>
+        <!-- due to bug with java 11 -->
+        <!-- https://github.com/spotbugs/spotbugs/issues/756 -->
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE"/>
+    </Match>
+
+    <Match>
+        <!-- overly aggressive check added in 4.4.1 -->
+        <Bug pattern="MS_EXPOSE_REP"/>
+    </Match>
+    <Match>
+        <!-- overly aggressive check added in 4.4.1 -->
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
+        <!-- overly aggressive check added in 4.4.1 -->
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+
+    <Match>
+        <!-- issue with spotbugs 4.7.0 -->
+        <!-- https://github.com/spotbugs/spotbugs/issues/2040 -->
+        <Bug pattern="THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION" />
+    </Match>
+
+    <Match>
+        <Bug pattern="THROWS_METHOD_THROWS_RUNTIMEEXCEPTION" />
+    </Match>
+
+    <Match>
+        <Bug pattern="THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION" />
+    </Match>
+
+    <Match>
+        <Bug pattern="THROWS_METHOD_THROWS_CLAUSE_THROWABLE" />
+    </Match>
+
+    <Match>
+        <!-- introduced with spotbugs 4.8 and require code refactoring -->
+        <Bug pattern="CT_CONSTRUCTOR_THROW"/>
+    </Match>
+    <Match>
+        <!-- introduced with spotbugs 4.8 and require code refactoring -->
+        <Bug pattern="PI_DO_NOT_REUSE_PUBLIC_IDENTIFIERS_FIELD_NAMES"/>
+    </Match>
+    <Match>
+        <!-- introduced with spotbugs 4.8 and require code refactoring -->
+        <Bug pattern="PI_DO_NOT_REUSE_PUBLIC_IDENTIFIERS_CLASS_NAMES"/>
+    </Match>
+    <Match>
+        <!-- introduced with spotbugs 4.8 and require code refactoring -->
+        <Bug pattern="PI_DO_NOT_REUSE_PUBLIC_IDENTIFIERS_LOCAL_VARIABLE_NAMES"/>
+    </Match>
+
+</FindBugsFilter>

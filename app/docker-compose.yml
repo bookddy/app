@@ -13,8 +13,14 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./src
-          target: /opt/app/src
+          path: ./src/main/java
+          target: /opt/app/src/main/java
+          ignore:
+            - target/
+            - .*.class
+        - action: sync
+          path: ./src/main/resources
+          target: /opt/app/src/main/resources
           ignore:
             - target/
         - action: rebuild

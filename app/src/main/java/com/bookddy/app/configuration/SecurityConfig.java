@@ -19,28 +19,30 @@ import com.bookddy.app.service.MyUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Autowired
-	private MyUserDetailsService userDetailsService;
+  @Autowired
+  private MyUserDetailsService userDetailsService;
 
-	@Bean
-	public AuthenticationProvider authProvider() {
-		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(userDetailsService);
-		provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
-		return provider;
-	}
-    
-    @Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  @Bean
+  public AuthenticationProvider authProvider() {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    provider.setUserDetailsService(userDetailsService);
+    provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
+    return provider;
+  }
 
-		http.csrf(customizer -> customizer.disable())
-				.authorizeHttpRequests(request -> 
-					request.requestMatchers(HttpMethod.POST, "/auth/*").permitAll()
-					.requestMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
-					.anyRequest().authenticated())
-				.httpBasic(Customizer.withDefaults())
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		return http.build();
-	}
+    http.csrf(customizer -> customizer.disable())
+        .authorizeHttpRequests(request ->
+            request.requestMatchers(HttpMethod.POST, "/auth/*").permitAll()
+                .requestMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
+                .anyRequest().authenticated())
+        .httpBasic(Customizer.withDefaults())
+        .sessionManagement(
+            session -> session.sessionCreationPolicy(
+                SessionCreationPolicy.STATELESS));
+
+    return http.build();
+  }
 }

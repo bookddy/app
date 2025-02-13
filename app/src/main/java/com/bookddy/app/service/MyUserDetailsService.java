@@ -13,15 +13,15 @@ import com.bookddy.app.repository.UserRepo;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepo repo;
+  @Autowired
+  private UserRepo repo;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repo.findByUsername(username);
-        if (user == null){
-            throw new UsernameNotFoundException("User 404");
-        }
-        return new UserPrincipal(user);
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    User user = repo.findByUsername(username);
+    if (user == null) {
+      throw new UsernameNotFoundException("User 404");
     }
+    return new UserPrincipal(user);
+  }
 }
